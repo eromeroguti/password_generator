@@ -3,43 +3,52 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  console.log("in my write password function")
   var password = generatePassword();
-    var passwordText = document.querySelector("#password");
+  var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
 
 }
 
-function getLength(){
-  //var length = //how do we ask the user?
-  var length = prompt("What's the length you'd like your password to be?")
-  console.log(length)
-  if(length >= 8 && length <= 128){
-   return length
-  } 
-    console.log("invalid")
-    return getLength()
-  
-}
-
 function generatePassword() {
-  console.log("entered my generatePassword")
-  var passwordLength = getLength()
-  console.log(passwordLength, " in my generatePassword")
-  var passwordCharacters = getCharacters()
-  
-  //make the password down here
-  var passWordToReturn = ""
+    var passwordLength = prompt("How many characters would you like your password to be?");
+    if (passwordLength < 8 || passwordLength > 128) {
+        alert("Password must be between 8 and 128 characters");
+        return;
+    }
+    var passwrdLowerCase = confirm("Would you like to include lowercase letters?");
+    var passwrdUpperCase = confirm("Would you like to include uppercase letters?");
+    var passwrdNumeric = confirm("Would you like to include numbers?");
+    var passwrdSpecial = confirm("Would you like to include special characters?");
+    if (passwrdLowerCase === false && passwrdUpperCase === false && passwrdNumeric === false && passwrdSpecial === false) {
+        alert("You must select at least one character type");
+        return;
+    }
+    var lowerCase = "abcdefghijklmnopqrstuvwxyz";
+    var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var numeric = "0123456789";
+    var special = "!@#$%^&*()_+~`|}{[]\:;?><,./-=";
+    var password = "";
 
-  return passWordToReturn
-}
+    if (passwrdLowerCase === true) {
+        password += lowerCase;
+    }
+    if (passwrdUpperCase === true) {
+        password += upperCase;
+    }
+    if (passwrdNumeric === true) {
+        password += numeric;
+    }
+    if (passwrdSpecial === true) {
+        password += special;
+    }
+    if (passwrdLowerCase === true && passwrdUpperCase === true && passwrdNumeric === true && passwrdSpecial === true) {
+        password = lowerCase + upperCase + numeric + special;
+    }
+   
+    return password;
+};
 
-function getCharacters(){
-  console.log("getting characters")
-  var passwordCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789'
- 
-}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
